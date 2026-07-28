@@ -85,6 +85,30 @@ uploadBtn.addEventListener("click", async()=>{
     .from("NovaBox")
     .getPublicUrl(fileName);
 
+    // Simpan data upload ke database
+
+const code = Date.now().toString(36);
+
+
+const { error: dbError } = await supabase
+.from("files")
+.insert({
+
+    code: code,
+    filename: fileName,
+    url: data.publicUrl,
+    type: selectedFile.type
+
+});
+
+
+if(dbError){
+
+    console.log(dbError);
+    alert("File upload berhasil, tapi database gagal menyimpan");
+
+}
+
 
 
     result.style.display="block";
