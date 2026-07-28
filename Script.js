@@ -7,7 +7,13 @@ const supabaseUrl = "https://tpjzhwgknhxrjucdhtce.supabase.co";
 
 const supabaseKey = "YOUR_ANON_KEY";
 
-const supabaseClient = supabase.createClient(
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const supabaseUrl = "https://tpjzhwgknhxrjucdhtce.supabase.co";
+
+const supabaseKey = "ANON_KEY_KAMU";
+
+const supabaseClient = createClient(
     supabaseUrl,
     supabaseKey
 );
