@@ -1,22 +1,14 @@
-// ===========================
-// NovaBox v1
-// Powered by @Xyferzz
-// ===========================
-
-const supabaseUrl = "https://tpjzhwgknhxrjucdhtce.supabase.co";
-
-const supabaseKey = "YOUR_ANON_KEY";
-
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const supabaseUrl = "https://tpjzhwgknhxrjucdhtce.supabase.co";
 
-const supabaseKey = "ANON_KEY_KAMU";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwanpod2drbmh4cmp1Y2RodGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNDA5NjAsImV4cCI6MjEwMDgxNjk2MH0.Oj1zc2lPbz9AfYxH2tML_eY0CG5_pwqdVQRPwNm_sgc";
 
-const supabaseClient = createClient(
+const supabase = createClient(
     supabaseUrl,
     supabaseKey
 );
+
 
 const fileInput = document.getElementById("fileInput");
 const uploadBtn = document.getElementById("uploadBtn");
@@ -24,130 +16,97 @@ const uploadBtn = document.getElementById("uploadBtn");
 const preview = document.getElementById("preview");
 
 const result = document.getElementById("result");
-
 const urlResult = document.getElementById("urlResult");
-
 const copyBtn = document.getElementById("copyBtn");
 
-const progressArea = document.getElementById("progressArea");
-
-const progressBar = document.getElementById("progressBar");
-
-const progressText = document.getElementById("progressText");
 
 let selectedFile = null;
 
 
-// ===========================
-// Preview File
-// ===========================
-
+// Preview file
 fileInput.addEventListener("change", () => {
 
-selectedFile = fileInput.files[0];
+    selectedFile = fileInput.files[0];
 
-if(!selectedFile) return;
+    if(!selectedFile) return;
 
-preview.innerHTML = "";
+    const url = URL.createObjectURL(selectedFile);
 
-const url = URL.createObjectURL(selectedFile);
+    if(selectedFile.type.startsWith("image")){
 
-if(selectedFile.type.startsWith("image")){
+        preview.innerHTML = `
+        <img src="${url}">
+        `;
 
-preview.innerHTML = `
-<img src="${url}">
-`;
+    }else if(selectedFile.type.startsWith("video")){
 
-}
+        preview.innerHTML = `
+        <video controls src="${url}"></video>
+        `;
 
-else if(selectedFile.type.startsWith("video")){
-
-preview.innerHTML = `
-<video
-src="${url}"
-controls>
-</video>
-`;
-
-}
+    }
 
 });
 
-// ===========================
-// Upload File
-// ===========================
 
-uploadBtn.addEventListener("click", async () => {
+// Upload
+uploadBtn.addEventListener("click", async()=>{
 
-    if (!selectedFile) {
-        alert("Pilih file terlebih dahulu!");
+    if(!selectedFile){
+        alert("Pilih file dulu!");
         return;
     }
 
-    uploadBtn.disabled = true;
-    uploadBtn.innerText = "Uploading...";
 
-    progressArea.style.display = "block";
-    progressBar.style.width = "10%";
-    progressText.innerText = "Preparing...";
+    uploadBtn.innerText="Uploading...";
 
-    const ext = selectedFile.name.split(".").pop();
 
     const fileName =
-        Date.now() +
-        "-" +
-        Math.random().toString(36).substring(2,8) +
-        "." +
-        ext;
+    Date.now()+"-"+selectedFile.name;
 
-    progressBar.style.width = "35%";
-    progressText.innerText = "Uploading...";
 
-    const { error } = await supabaseClient
-        .storage
-        .from("novabox")
-        .upload(fileName, selectedFile);
+    const {error}=await supabase
+    .storage
+    .from("NovaBox")
+    .upload(fileName, selectedFile);
+
 
     if(error){
 
-        uploadBtn.disabled = false;
-        uploadBtn.innerText = "Upload Now";
-
         alert(error.message);
-
+        uploadBtn.innerText="Upload Now";
         return;
 
     }
 
-    progressBar.style.width = "90%";
-    progressText.innerText = "Generating URL...";
 
-    const { data } = supabaseClient
-        .storage
-        .from("novabox")
-        .getPublicUrl(fileName);
+    const {data}=supabase
+    .storage
+    .from("NovaBox")
+    .getPublicUrl(fileName);
 
-    progressBar.style.width = "100%";
-    progressText.innerText = "Upload Complete";
 
-    result.style.display = "block";
 
-    urlResult.value = data.publicUrl;
+    result.style.display="block";
 
-    uploadBtn.disabled = false;
-    uploadBtn.innerText = "Upload Now";
+    urlResult.value=data.publicUrl;
+
+
+    uploadBtn.innerText="Upload Now";
+
 
 });
 
-// ===========================
+
 // Copy URL
-// ===========================
+copyBtn.addEventListener("click",()=>{
 
-copyBtn.addEventListener("click", async ()=>{
+    navigator.clipboard.writeText(
+        urlResult.value
+    );
 
-    await navigator.clipboard.writeText(urlResult.value);
+    copyBtn.innerText="Copied ✅";
 
-    copyBtn.innerText = "Copied ✅";
 
     setTimeout(()=>{
 
