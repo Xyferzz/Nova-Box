@@ -7,6 +7,16 @@ export const config = {
 };
 
 export default async function handler(req, res) {
+
+  const apiKey = req.headers["x-api-key"];
+
+if (apiKey !== process.env.API_KEY) {
+  return res.status(401).json({
+    success: false,
+    message: "Invalid API Key"
+  });
+}
+  
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
