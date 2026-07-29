@@ -240,8 +240,7 @@ document.getElementById("sendMagicLink").onclick = async () => {
         email,
 
         options:{
-            emailRedirectTo: window.location.origin
-        }
+            emailRedirectTo: window.location.origin + "?getApiKey=true"
 
     });
 
@@ -355,5 +354,51 @@ function showToast(message, type = "info") {
         toast.classList.remove("show");
 
     },3000);
+
+}
+
+const params = new URLSearchParams(window.location.search);
+
+if (params.get("getApiKey") === "true") {
+
+    const {
+        data: { session }
+    } = await supabase.auth.getSession();
+
+    if (session) {
+
+        const key = await getApiKey();
+
+        if (key) {
+
+            popup.style.display = "flex";
+
+            document.querySelector(".popup-box").innerHTML = `
+                <h2>🎉 API Key Berhasil Dibuat</h2>
+
+                <input
+                    type="text"
+                    id="generatedKey"
+                    value="${key}"
+                    readonly>
+
+                <button id="copyGeneratedKey">
+                    Copy API Key
+                </button>
+            `;
+
+            document
+            .getElementById("copyGeneratedKey")
+            .onclick = () => {
+
+                navigator.clipboard.writeText(key);
+
+                showToast("API Key berhasil disalin!", "success");
+
+            };
+
+        }
+
+    }
 
 }
