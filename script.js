@@ -61,7 +61,7 @@ fileInput.addEventListener("change", () => {
 uploadBtn.addEventListener("click", async()=>{
 
     if(!selectedFile){
-        alert("Pilih file dulu!");
+        showToast("Pilih file dulu!");
         return;
     }
 
@@ -81,7 +81,7 @@ uploadBtn.addEventListener("click", async()=>{
 
     if(error){
 
-        alert(error.message);
+        showToast(error.message);
         uploadBtn.innerText="Upload Now";
         return;
 
@@ -113,7 +113,7 @@ const { error: dbError } = await supabase
 if(dbError){
 
     console.log(dbError);
-    alert("File upload berhasil, tapi database gagal menyimpan");
+    showToast("File upload berhasil, tapi database gagal menyimpan");
 
 }
 
@@ -171,9 +171,9 @@ document.getElementById("sendMagicLink").onclick = async () => {
     });
 
     if(error){
-        alert(error.message);
+        showToast(error.message);
          } else {
-        alert("Link berhasil dikirim! Silakan buka email lalu klik link login, ya mpruy!.");
+        showToast("Link berhasil dikirim! Silakan buka email lalu klik link login, ya mpruy!.");
         }
 
 };
