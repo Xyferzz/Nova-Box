@@ -140,3 +140,32 @@ copyBtn.addEventListener("click",()=>{
     },2000);
 
 });
+
+const popup = document.getElementById("loginPopup");
+
+document.getElementById("getApiKeyBtn").onclick = () => {
+    popup.style.display = "flex";
+};
+
+document.getElementById("closePopup").onclick = () => {
+    popup.style.display = "none";
+};
+
+document.getElementById("sendMagicLink").onclick = async () => {
+
+    const email = document.getElementById("emailInput").value;
+
+    const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options:{
+            emailRedirectTo: window.location.origin
+        }
+    });
+
+    if(error){
+        alert(error.message);
+    }else{
+        alert("Cek email kamu, Magic Link berhasil dikirim.");
+    }
+
+};
