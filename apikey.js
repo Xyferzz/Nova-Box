@@ -68,7 +68,19 @@ async function loadApiKey() {
 
     }
 
-    const newKey = "NX-" + crypto.randomUUID();
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+let random = "";
+
+for(let i = 0; i < 32; i++){
+
+    random += chars.charAt(
+        Math.floor(Math.random() * chars.length)
+    );
+
+}
+
+const newKey = "novabox-apikey." + random;
 
     const { error } = await supabase
         .from("api_keys")
