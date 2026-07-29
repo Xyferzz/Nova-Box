@@ -78,6 +78,8 @@ uploadBtn.addEventListener("click", async()=>{
     .from("NovaBox")
     .upload(fileName, selectedFile);
 
+    console.log("UPLOAD ERROR:", error);
+
 
     if(error){
 
