@@ -151,42 +151,166 @@ copyBtn.addEventListener("click",()=>{
 
 const popup = document.getElementById("loginPopup");
 
-document.getElementById("getApiKeyBtn").onclick = () => {
-    popup.style.display = "flex";
+
+document.getElementById("getApiKeyBtn").onclick = async () => {
+
+    const {
+        data:{session}
+    } = await supabase.auth.getSession();
+
+
+    if(session){
+
+        const key = await getApiKey();
+
+        showToast("API Key siap!", "success");
+
+        console.log("API KEY:", key);
+
+    }else{
+
+        popup.style.display = "flex";
+
+    }
+
 };
+
 
 document.getElementById("closePopup").onclick = () => {
     popup.style.display = "none";
 };
 
+
 document.getElementById("sendMagicLink").onclick = async () => {
 
     const email = document.getElementById("emailInput").value;
 
+
+    if(!email){
+
+        showToast("Masukkan email dulu!", "error");
+        return;
+
+    }
+
+
     const { error } = await supabase.auth.signInWithOtp({
+
         email,
+
         options:{
             emailRedirectTo: window.location.origin
         }
+
     });
 
+
     if(error){
-        showToast(error.message);
-         } else {
-        showToast("Link berhasil dikirim! Silakan buka email lalu klik link login, ya mpruy!.");
-        }
+
+        showToast(error.message, "error");
+
+    }else{
+
+        showToast(
+            "Link berhasil dikirim! Cek email kamu.",
+            "success"
+        );
+
+    }
 
 };
+
+
+
+// Buat / ambil API Key
+
+async function getApiKey(){
+
+    const {
+        data:{session}
+    } = await supabase.auth.getSession();
+
+
+    if(!session){
+
+        showToast("Belum login!", "error");
+        return;
+
+    }
+
+
+    const email = session.user.email;
+
+
+    const { data: existing, error } = await supabase
+
+    .from("api_keys")
+
+    .select("*")
+
+    .eq("email", email)
+
+    .single();
+
+
+
+    if(existing){
+
+        return existing.api_key;
+
+    }
+
+
+
+    const newKey =
+    "NX-" + crypto.randomUUID();
+
+
+
+    const { error: insertError } = await supabase
+
+    .from("api_keys")
+
+    .insert({
+
+        email: email,
+
+        api_key: newKey
+
+    });
+
+
+
+    if(insertError){
+
+        showToast(insertError.message,"error");
+        return;
+
+    }
+
+
+    return newKey;
+
+}
+
+
+
 
 function showToast(message, type = "info") {
 
     const toast = document.getElementById("toast");
 
+
     toast.textContent = message;
+
+
     toast.className = `toast ${type} show`;
 
+
     setTimeout(() => {
+
         toast.classList.remove("show");
-    }, 3000);
+
+    },3000);
 
 }
