@@ -113,7 +113,8 @@ if(dbError){
 
     result.style.display="block";
 
-    urlResult.value=data.publicUrl;
+    urlResult.value =
+window.location.origin + "/f/" + code;
 
 
     uploadBtn.innerText="Upload Now";
