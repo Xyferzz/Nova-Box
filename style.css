@@ -332,3 +332,69 @@ h1{
     padding:12px;
     margin-top:8px;
 }
+
+.toast{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%) translateY(-20px);
+    background:#6d28d9;
+    color:#fff;
+    padding:14px 20px;
+    border-radius:12px;
+    font-weight:600;
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+    z-index:99999;
+    box-shadow:0 10px 30px rgba(109,40,217,.4);
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+.toast.success{
+    background:#22c55e;
+}
+
+.toast.error{
+    background:#ef4444;
+}
+
+.toast.info{
+    background:#3b82f6;
+}
+
+#getApiKeyBtn{
+    width:100%;
+    margin-top:15px;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 8px 25px rgba(124,58,237,.35);
+}
+
+#getApiKeyBtn{
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border-radius:12px;
+    border:none;
+    background:#6d28d9;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+#getApiKeyBtn:hover{
+    background:#7c3aed;
+}
