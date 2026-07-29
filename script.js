@@ -87,8 +87,8 @@ uploadBtn.addEventListener("click", async()=>{
 
     // Simpan data upload ke database
 
-const code = Date.now().toString(36);
-
+const code =
+Math.random().toString(36).substring(2,8);
 
 const { error: dbError } = await supabase
 .from("files")
