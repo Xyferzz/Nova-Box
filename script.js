@@ -181,7 +181,15 @@ document.getElementById("closePopup").onclick = () => {
 };
 
 
+let magicCooldown = false;
+
 document.getElementById("sendMagicLink").onclick = async () => {
+
+    if(magicCooldown){
+        showToast("Tunggu sebentar sebelum kirim ulang!", "error");
+        return;
+    }
+
 
     const email = document.getElementById("emailInput").value;
 
@@ -194,6 +202,39 @@ document.getElementById("sendMagicLink").onclick = async () => {
     }
 
 
+    magicCooldown = true;
+
+    const btn = document.getElementById("sendMagicLink");
+
+    btn.disabled = true;
+
+
+    let time = 60;
+
+
+    const timer = setInterval(()=>{
+
+        btn.innerText = `Tunggu ${time}s`;
+
+        time--;
+
+
+        if(time < 0){
+
+            clearInterval(timer);
+
+            btn.disabled = false;
+
+            btn.innerText = "Kirim Magic Link";
+
+            magicCooldown = false;
+
+        }
+
+    },1000);
+
+
+
     const { error } = await supabase.auth.signInWithOtp({
 
         email,
@@ -203,6 +244,7 @@ document.getElementById("sendMagicLink").onclick = async () => {
         }
 
     });
+
 
 
     if(error){
@@ -219,6 +261,7 @@ document.getElementById("sendMagicLink").onclick = async () => {
     }
 
 };
+    
 
 
 
