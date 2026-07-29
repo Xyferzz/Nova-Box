@@ -241,6 +241,7 @@ document.getElementById("sendMagicLink").onclick = async () => {
 
         options:{
             emailRedirectTo: window.location.origin + "?getApiKey=true"
+        }
 
     });
 
