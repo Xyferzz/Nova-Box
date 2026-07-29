@@ -24,12 +24,10 @@ sendBtn.onclick = async () => {
     }
 
     const { error } = await supabase.auth.signInWithOtp({
-
-        email,
-
-        options: {
-            emailRedirectTo:"https://nova-box-nu.vercel.app/apikey.html"
-        }
+  email: email,
+  options: {
+    emailRedirectTo: "https://novabox-dipx1m1e8-dianeshalnaura-5985s-projects.vercel.app/apikey.html"
+  }
 
     });
 
