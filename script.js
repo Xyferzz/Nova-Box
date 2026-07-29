@@ -9,6 +9,14 @@ const supabase = createClient(
     supabaseKey
 );
 
+const {
+    data: { session }
+} = await supabase.auth.getSession();
+
+if (session) {
+    console.log("Login sebagai:", session.user.email);
+}
+
 
 const fileInput = document.getElementById("fileInput");
 const uploadBtn = document.getElementById("uploadBtn");
@@ -164,8 +172,8 @@ document.getElementById("sendMagicLink").onclick = async () => {
 
     if(error){
         alert(error.message);
-    }else{
-        alert("Cek email kamu, Magic Link berhasil dikirim.");
-    }
+         } else {
+        alert("Link berhasil dikirim! Silakan buka email lalu klik link login, ya mpruy!.");
+        }
 
 };
