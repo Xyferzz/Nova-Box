@@ -398,3 +398,88 @@ h1{
 #getApiKeyBtn:hover{
     background:#7c3aed;
 }
+
+#loginPopup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    backdrop-filter:blur(8px);
+}
+
+.popup-box{
+    width:90%;
+    max-width:360px;
+    background:#161a2d;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    animation:popup .25s ease;
+}
+
+@keyframes popup{
+    from{
+        transform:scale(.9);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.popup-box h2{
+    color:#fff;
+    text-align:center;
+    margin-bottom:18px;
+}
+
+.popup-box input{
+    width:100%;
+    padding:14px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:#242944;
+    color:#fff;
+    margin-bottom:15px;
+    box-sizing:border-box;
+}
+
+.popup-box input::placeholder{
+    color:#aaa;
+}
+
+#sendMagicLink{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+    margin-bottom:10px;
+}
+
+#closePopup{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#2b304d;
+    color:#fff;
+    cursor:pointer;
+}
+
+#sendMagicLink:hover{
+    opacity:.9;
+}
+
+#closePopup:hover{
+    background:#3b4264;
+}
