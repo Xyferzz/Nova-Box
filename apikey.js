@@ -28,7 +28,7 @@ sendBtn.onclick = async () => {
         email,
 
         options: {
-            emailRedirectTo: window.location.origin + "/apikey.html"
+            emailRedirectTo:"https://nova-box-nu.vercel.app/apikey.html"
         }
 
     });
