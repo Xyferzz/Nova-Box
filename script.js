@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const supabaseUrl = "https://tpjzhwgknhxrjucdhtce.supabase.co";
 
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwanpod2drbmh4cmp1Y2RodGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNDA5NjAsImV4cCI6MjEwMDgxNjk2MH0.Oj1zc2lPbz9AfYxH2tML_eY0CG5_pwqdVQRPwNm_sgc";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwanpod2drbmh4cmp1Y2RodGNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNDA5NjAsImV4cCI6MjEwMDgxNjk2MH0.Oj1zc2lPbz9[...]";
 
 const supabase = createClient(
     supabaseUrl,
@@ -242,7 +242,8 @@ document.getElementById("sendMagicLink").onclick = async () => {
         email,
 
         options:{
-            emailRedirectTo: window.location.origin + "?getApiKey=true"
+            // Redirect magic link to dedicated page that displays the API key
+            emailRedirectTo: window.location.origin + "/getapikey.html"
         }
 
     });
@@ -337,6 +338,7 @@ async function getApiKey(){
     return newKey;
 
 }
+
 
 
 
