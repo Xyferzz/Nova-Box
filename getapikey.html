@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ambil API Key — NovaBox</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Pakai style.css yang sudah ada di repo -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* kecilkan override agar tampilan konsisten dengan apikey.html */
+    .card { max-width:420px; margin: 40px auto; padding:28px; border-radius:20px; }
+    .logo{ width:70px; height:70px; margin:auto; border-radius:50%; background:linear-gradient(135deg,#6d28d9,#4f46e5); display:flex;align-items:center;justify-content:center;font-size:32px;color:#fff;margin-bottom:18px;}
+    h1{ color:#fff; text-align:center; margin-bottom:8px; font-size:24px;}
+    .desc{ color:#9ca3af; text-align:center; margin-bottom:20px;}
+    input[readonly]{ font-family:monospace;}
+    .footer{ text-align:center; color:#777; margin-top:18px; font-size:13px;}
+    a{ color:#7c3aed; text-decoration:none;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">N</div>
+
+    <h1>Ambil API Key</h1>
+    <p class="desc">Klik link di email akan membuka halaman ini. Jika sudah login, API Key akan otomatis tampil.</p>
+
+    <!-- Struktur element sesuai yang dipakai apikey.js -->
+    <div id="loginBox">
+      <input type="email" id="emailInput" placeholder="Masukkan Email" />
+      <button id="sendMagicLink">Kirim Magic Link</button>
+    </div>
+
+    <div id="apiBox" style="display:none;">
+      <input type="text" id="apiKey" readonly placeholder="API Key akan muncul di sini" />
+      <button id="copyApiKey">Copy API Key</button>
+    </div>
+
+    <div class="footer">
+      <a href="index.html">← Kembali ke Upload</a>
+    </div>
+  </div>
+
+  <!-- pakai module apikey.js yang sudah ada di repo -->
+  <script type="module" src="apikey.js"></script>
+</body>
+</html>
