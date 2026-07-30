@@ -400,8 +400,15 @@ if (params.get("getApiKey") === "true") {
 
             };
 
+            const getApiKeyBtn = document.getElementById("getApiKeyBtn");
+
+getApiKeyBtn.addEventListener("click", () => {
+    window.location.assign("/apikey.html");
+});
+
         }
 
     }
 
 }
+
